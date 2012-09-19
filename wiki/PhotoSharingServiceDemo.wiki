@@ -1,0 +1,10 @@
+#summary A photo sharing service demo application.
+
+= Introduction =
+
+The purpose of this sample application is to demonstrate how to build a real world cloud application based upon various pieces of the Google Cloud Platform.
+
+= Design and Implementation =
+http://google-cloud-solutions.googlecode.com/svn/wiki/PhotoSharingServiceArchitectureDiagram.png
+
+= Build and Run =
