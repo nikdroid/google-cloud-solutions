@@ -4,7 +4,19 @@
 
 The purpose of this sample application is to demonstrate how to build a real world cloud application based upon various pieces of the Google Cloud Platform.
 
+= Requirements Specification =
+=== Functional Requirements ===
+ * User has to login with any valid Google account to use the application
+ * User uploads a photo from local disk with a description
+ * The photos uploaded by all users are fed into the "Photofeed" and shown in chronic order by the time the photo is uploaded.
+ * User adds comments to any photo and the comments are visible to all users.
+
+=== Non-Functional Requirements ===
+ * Java is used to develop the GAE application
+ * Google Cloud Storage is used to store the photos.
+ * User could select either App Engine NoSQL datastore or Google Cloud SQL to store the application data model including the meta data about the photos for query purpose.
 = Design and Implementation =
 http://google-cloud-solutions.googlecode.com/svn/wiki/PhotoSharingServiceArchitectureDiagram.png
 
+As shown in the diagram, 
 = Build and Run =
