@@ -18,7 +18,7 @@ The purpose of this sample application is to demonstrate how to build a real wor
 = Design and Implementation =
 http://google-cloud-solutions.googlecode.com/svn/wiki/PhotoSharingServiceArchitectureDiagram.png
 
-The architecture diagram shows the major components of the deployed system. In the diagram, the thin curved lines with arrows show the communication between different components without particular orders. The thick arrow-ed lines show the data flow of photo media files.
+The architecture diagram shows the major components of the deployed system. In the diagram, the thin curved lines with arrows show the communication between different components without particular orders. The thick arrow-ed lines in green color show the data flow of photo media files.
 
 == System Components ==
 === Web Applications inside App Engine ===
@@ -39,7 +39,7 @@ All traffic from the Browser to the GCS and GAE goes through the Google Global N
 == Communication Flow ==
 The diagram shows the communication between components without particular orders:
  # Browser requests are routed to the Web Application hosted inside App Engine. The built-in auto-scaling of App Engine would start App Engine instances based on the amount of traffic, and automatically load balancing the requests based on the load on each GAE instance.
- #
+ # Via the Blobstore APIs, the App Engine could generated URLs for uploading and serving files from the Google Cloud Storage.
 == Media Data Flow ==
  # Photos are uploaded and downloaded to and from GCS through the Google Global Network. For download, the Google network honors the HTTP caching headers and provides the edge caching for media files.
 = Build and Run =
