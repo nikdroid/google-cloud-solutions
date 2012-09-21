@@ -5,18 +5,41 @@
 The purpose of this sample application is to demonstrate how to build a real world cloud application based upon various pieces of the Google Cloud Platform.
 
 = Requirements Specification =
-=== Functional Requirements ===
+== Functional Requirements ==
  * User has to login with any valid Google account to use the application
  * User uploads a photo from local disk with a description
  * The photos uploaded by all users are fed into the "Photofeed" and shown in chronic order by the time the photo is uploaded.
  * User adds comments to any photo and the comments are visible to all users.
 
-=== Non-Functional Requirements ===
+== Non-Functional Requirements ==
  * Java is used to develop the GAE application
  * Google Cloud Storage is used to store the photos.
  * User could select either App Engine NoSQL datastore or Google Cloud SQL to store the application data model including the meta data about the photos for query purpose.
 = Design and Implementation =
 http://google-cloud-solutions.googlecode.com/svn/wiki/PhotoSharingServiceArchitectureDiagram.png
 
-As shown in the diagram, 
+The architecture diagram shows the major components of the deployed system. In the diagram, the thin curved lines with arrows show the communication between different components without particular orders. The thick arrow-ed lines show the data flow of photo media files.
+
+== System Components ==
+=== Web Applications inside App Engine ===
+The photo sharing application is hosted inside Google App Engine(GAE). It handles all user requests from the browser, provides user interfaces for photo uploading, navigation, and comment posting etc. It also orchestrates the media data flow between the browser and the Google Cloud Storage.
+
+=== App Engine Datastore ===
+The NoSQL datastore is used to store the meta data about each photo uploaded, including the description, uploader, timestamp, and a key to the media file in the Cloud Storage. It also hosts the application data model, such as the users and comments information.
+
+=== Google Cloud SQL ===
+This is an alternative for the NoSQL datastore. You could switch between the two data store options between simply change the configuration file.
+
+=== Google Cloud Storage ===
+The Google Cloud Storage (GCS) stores all the binary media files for the uploaded photos. With the integration between the GAE and GCS via the Blobstore API, photos are uploaded and served directly between user's browser and the GCS through the Google Network.
+
+=== Google Global Network ===
+All traffic from the Browser to the GCS and GAE goes through the Google Global Network. The Google Globa Network not only provides necessary load balancing for global users requests to GCS And GAE, it also honors the standard HTTP caching headers. So media files are cached at the network edge and significantly improves the speed of serving static images.
+
+== Communication Flow ==
+The diagram shows the communication between components without particular orders:
+ # Browser requests are routed to the Web Application hosted inside App Engine. The built-in auto-scaling of App Engine would start App Engine instances based on the amount of traffic, and automatically load balancing the requests based on the load on each GAE instance.
+ #
+== Media Data Flow ==
+ # Photos are uploaded and downloaded to and from GCS through the Google Global Network. For download, the Google network honors the HTTP caching headers and provides the edge caching for media files.
 = Build and Run =
