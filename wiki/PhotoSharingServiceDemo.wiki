@@ -39,7 +39,18 @@ All traffic from the Browser to the GCS and GAE goes through the Google Global N
 == Communication Flow ==
 The diagram shows the communication between components without particular orders:
  # Browser requests are routed to the Web Application hosted inside App Engine. The built-in auto-scaling of App Engine would start App Engine instances based on the amount of traffic, and automatically load balancing the requests based on the load on each GAE instance.
- # Via the Blobstore APIs, the App Engine could generated URLs for uploading and serving files from the Google Cloud Storage.
+ # Via the Blobstore APIs, the App Engine could generated URLs for uploading and serving files from the Google Cloud Storage. Also after the media files uploaded to the Google Cloud Storage, the original HTTP request is forward to a callback URL provided by the App Engine application.
+# The web application inside the App Engine uses the NoSQL datastore to store application model, including user information and comments to the photos. Also via the callback from the Google Cloud Storage, photo metadata is stored in the datastore as well. With the datastore, user could do query and search based on users, photo metadata, and comments etc.
+# Alternatively, the web application could use Cloud SQL instance as the application datastore.
+
 == Media Data Flow ==
- # Photos are uploaded and downloaded to and from GCS through the Google Global Network. For download, the Google network honors the HTTP caching headers and provides the edge caching for media files.
+ # Photos are uploaded and downloaded to and from GCS through the Google Global Network. For download, the Google network honors the HTTP caching headers and provides the edge caching for media files. Only in case of cache miss, media data is requested from the Cloud Storage.
+# Photos and uploaded and downloaded from the GCS.
+
 = Build and Run =
+
+== Build Configuration ==
+
+You could build and deploy the application using either Apache Ant or using Eclipse with Google plugin.
+
+=== Ant Build ===
