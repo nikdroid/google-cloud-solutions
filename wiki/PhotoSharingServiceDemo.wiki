@@ -55,10 +55,10 @@ You could build and deploy the application using either Apache Ant or using Ecli
 
 You should modify the "build.properties" to configure several build properties to the appropriate values:
  * sdk.dir: point to the directory where the App Engine Java SDK is located.
- * cloud.sql.jdbc.url: Cloud SQL JDBC URL, ex jdbc:google:rdbms://[instance]/[database]. Remember to give access permission to this App Engine application id.
+ * cloud.sql.jdbc.url: Cloud SQL JDBC URL, ex jdbc:google:rdbms://db_instance/database. Remember to give access permission to this App Engine application id.
  * cloud.storage.bucket.name: Cloud Storage bucket name. Remember to gives read/write permission to the application service account.
  * application.id: App Engine application id where you want to deploy the application.
- * application.entity.manager.factory: The entity manager factory class name. Currently, this value could be set as "com.google.cloud.demo.model.nosql.DemoEntityManagerNoSqlFactory" which means App Engine NoSQL datastore is used; or set as "com.google.cloud.demo.model.sql.DemoEntityManagerSqlFactory" which means Cloud SQL is used.
+ * application.entity.manager.factory: The entity manager factory class name. Currently, this value could be set as "com.google.cloud.demo.model.nosql.!DemoEntityManagerNoSqlFactory" which means App Engine NoSQL datastore is used; or set as "com.google.cloud.demo.model.sql.!DemoEntityManagerSqlFactory" which means Cloud SQL is used.
 
 == System Set up ==
 To set up the application, the following set up needs to be done:
