@@ -47,7 +47,7 @@ The diagram shows the communication between components without particular orders
 
 == Media Data Flow ==
  # Photos are uploaded and downloaded to and from GCS through the Google Global Network. For download, the Google network honors the HTTP caching headers and provides the edge caching for media files. Only in case of cache miss, media data is requested from the Cloud Storage.
- # Photos and uploaded and downloaded from the GCS.
+ # Photos are uploaded and downloaded from the GCS.
 
 = Build and Run =
 
