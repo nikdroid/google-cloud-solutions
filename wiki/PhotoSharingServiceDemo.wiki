@@ -1,5 +1,7 @@
 #summary A photo sharing service demo application.
 
+<wiki:toc max_depth="3" />
+
 = Introduction =
 
 The purpose of this sample application is to demonstrate how to build a real world cloud application based upon various pieces of the Google Cloud Platform.
