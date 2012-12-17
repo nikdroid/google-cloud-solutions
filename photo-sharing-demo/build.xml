@@ -1,5 +1,6 @@
 <project name="PhotoSharingDemo" default="datanucleusenhance">
         <property file="build.properties" />
+        <property name="release_version" value="1.0"/>
         <property name="appengine_webxml_tpl_file" value="war/WEB-INF/appengine-web.xml.tpl"/>
         <property name="appengine_webxml_file" value="war/WEB-INF/appengine-web.xml"/>
         <import file="${sdk.dir}/config/user/ant-macros.xml" />
@@ -15,7 +16,7 @@
         </path>
 
         <target name="init" description="Copies the App Engine JARs to the WAR.">
-                <delete file="${appengine_webxml_file}"/>
+                <delete quiet="true" file="${appengine_webxml_file}"/>
                 <copy file="${appengine_webxml_tpl_file}" tofile="${appengine_webxml_file}">
                         <filterchain>
                                 <replacetokens>
@@ -86,8 +87,14 @@
                 <appcfg action="update_indexes" war="war" />
         </target>
 
+        <target name="dist-tar">
+          <tar destfile="photo-sharing-demo-${release_version}.tar" basedir="." excludes="*.tar, *.zip, **/.svn/**"/>
+        </target>
+        <target name="dist-zip">
+          <zip destfile="photo-sharing-demo-${release_version}.zip" basedir="." excludes="*.tar, *.zip, **/.svn/**"/>
+        </target>
         <target name="clean">
-                <delete>
+                <delete quiet="true">
                         <fileset dir="war/WEB-INF/lib" includes="*.jar"/>
                         <fileset dir="war/WEB-INF/classes" includes="com/**"/>
                         <fileset dir="war/WEB-INF/appengine-generated/" includes="**/*"/>
