@@ -20,7 +20,19 @@
 
 <head>
 <script type="text/javascript">
+function onFileSelected() {
+  filename = document.getElementById("input-file").value;
+  if (filename == null || filename == "") {
+    document.getElementById("btn-post").setAttribute("class", "inactive btn");
+    document.getElementById("btn-post").disabled = true;
+  } else {
+    document.getElementById("btn-post").setAttribute("class", "active btn");
+    document.getElementById("btn-post").disabled = false;
+  }
+}
+
 function togglePhotoPost(expanded) {
+  onFileSelected();
   if (expanded) {
     document.getElementById("btn-choose-image").style.display="none";
     document.getElementById("upload-form").style.display="block";
@@ -30,12 +42,25 @@ function togglePhotoPost(expanded) {
   }
 }
 
+function onCommentChanged(id) {
+  comment = document.getElementById("comment-input-" + id).value;
+  if (comment == null || comment.trim() == "") {
+    document.getElementById("comment-submit-" + id).setAttribute("class", "inactive btn");
+    document.getElementById("comment-submit-" + id).disabled = true;
+  } else {
+    document.getElementById("comment-submit-" + id).setAttribute("class", "active btn");
+    document.getElementById("comment-submit-" + id).disabled = false;
+  }
+}
+
 function toggleCommentPost(id, expanded) {
+  onCommentChanged(id);
   if (expanded) {
     document.getElementById("comment-input-" + id).setAttribute("class", "post-comment expanded");
     document.getElementById("comment-submit-" + id).style.display="inline-block";
     document.getElementById("comment-cancel-" + id).style.display="inline-block";
   } else {
+    document.getElementById("comment-input-" + id).value = ""
     document.getElementById("comment-input-" + id).setAttribute("class", "post-comment collapsed");
     document.getElementById("comment-submit-" + id).style.display="none";
     document.getElementById("comment-cancel-" + id).style.display="none";
@@ -80,9 +105,10 @@ function toggleCommentPost(id, expanded) {
         <div id="upload-form" style="display:none">
           <form action="<%= serviceManager.getUploadUrl() %>" method="post"
             enctype="multipart/form-data">
-            <input class="inactive file btn" type="file" name="photo">
+            <input id="input-file" class="inactive file btn" type="file" name="photo"
+              onchange="onFileSelected()">
             <textarea name="title" placeholder="Write a description"></textarea>
-            <input class="active btn" type="submit" value="Post">
+            <input id="btn-post" class="active btn" type="submit" value="Post">
             <a class="cancel" onclick="togglePhotoPost(false)">Cancel</a>
           </form>
         </div>
@@ -166,7 +192,9 @@ function toggleCommentPost(id, expanded) {
               <input type="hidden" name="user" value="<%= photo.getOwnerId()%>" />
               <input type="hidden" name="id" value="<%= photo.getId()%>" />
               <textarea id="comment-input-<%= count %>" class="post-comment collapsed" name="comment"
-                placeholder="Post a comment" onclick="toggleCommentPost(<%= count%>, true)"></textarea>
+                placeholder="Post a comment" onclick="toggleCommentPost(<%= count%>, true)"
+                onchange="onCommentChanged(<%= count%>)"
+                onkeyup="onCommentChanged(<%= count%>)" onPaste="onCommentChanged(<%= count%>)"></textarea>
               <input id="comment-submit-<%= count %>" class="inactive btn" style="display:none"
                 type="submit" name="send" value="Post comment">
               <a id="comment-cancel-<%= count %>" class="cancel" style="display:none"

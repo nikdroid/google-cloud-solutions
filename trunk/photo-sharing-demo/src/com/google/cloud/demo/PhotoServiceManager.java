@@ -47,9 +47,14 @@ public class PhotoServiceManager {
   }
 
   public String getUploadUrl() {
-    String bucket = configManager.getGoogleStorageBucket();
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    UploadOptions uploadOptions = UploadOptions.Builder.withGoogleStorageBucketName(bucket);
+    UploadOptions uploadOptions = null;
+    String bucket = configManager.getGoogleStorageBucket();
+    if (bucket == null || bucket.isEmpty()) {
+      uploadOptions = UploadOptions.Builder.withDefaults();
+    } else {
+      uploadOptions = UploadOptions.Builder.withGoogleStorageBucketName(bucket);
+    }
     return blobstoreService.createUploadUrl(configManager.getUploadHandlerUrl(), uploadOptions);
   }
 

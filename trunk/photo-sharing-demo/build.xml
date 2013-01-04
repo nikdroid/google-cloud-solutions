@@ -1,6 +1,6 @@
 <project name="PhotoSharingDemo" default="datanucleusenhance">
         <property file="build.properties" />
-        <property name="release_version" value="1.0"/>
+        <property name="release_version" value="1.1"/>
         <property name="appengine_webxml_tpl_file" value="war/WEB-INF/appengine-web.xml.tpl"/>
         <property name="appengine_webxml_file" value="war/WEB-INF/appengine-web.xml"/>
         <import file="${sdk.dir}/config/user/ant-macros.xml" />
@@ -87,18 +87,18 @@
                 <appcfg action="update_indexes" war="war" />
         </target>
 
-        <target name="dist-tar">
-          <tar destfile="photo-sharing-demo-${release_version}.tar" basedir="." excludes="*.tar, *.zip, **/.svn/**"/>
+        <target name="dist-tar" depends="clean">
+          <tar destfile="photo-sharing-demo-${release_version}.tar" basedir="." excludes="*.tar, *.zip, **/.svn/**, .settings/**"/>
         </target>
-        <target name="dist-zip">
-          <zip destfile="photo-sharing-demo-${release_version}.zip" basedir="." excludes="*.tar, *.zip, **/.svn/**"/>
+        <target name="dist-zip" depends="clean">
+          <zip destfile="photo-sharing-demo-${release_version}.zip" basedir="." excludes="*.tar, *.zip, **/.svn/**, .settings/**"/>
         </target>
         <target name="clean">
                 <delete quiet="true">
                         <fileset dir="war/WEB-INF/lib" includes="*.jar"/>
                         <fileset dir="war/WEB-INF/classes" includes="com/**"/>
-                        <fileset dir="war/WEB-INF/appengine-generated/" includes="**/*"/>
+                        <fileset dir="war/WEB-INF/appengine-generated"/>
                 </delete>
+                <delete quiet="true" file="${appengine_webxml_file}"/>
         </target>
-
 </project>
