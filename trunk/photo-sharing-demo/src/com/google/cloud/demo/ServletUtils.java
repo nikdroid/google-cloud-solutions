@@ -29,6 +29,8 @@ public final class ServletUtils extends HttpServlet {
   public static final String REQUEST_PARAM_NAME_PRIVATE = "private";
   public static final String REQUEST_PARAM_NAME_COMMENT = "comment";
   public static final String REQUEST_PARAM_NAME_TARGET_URL = "targetUrl";
+  // The error code.
+  public static final String REQUEST_PARAM_NAME_CODE = "code";
   public static final String[] USER_ICONS = new String[] {
     "img/users/ba.png",
     "img/users/dp.png",

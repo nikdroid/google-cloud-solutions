@@ -1,4 +1,3 @@
-<%@page import="com.google.cloud.demo.model.PhotoManager"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
   isELIgnored="false"%>
 
@@ -6,6 +5,7 @@
 <%@ page import="com.google.cloud.demo.*"%>
 <%@ page import="com.google.cloud.demo.model.*"%>
 <%@ page import="com.google.appengine.api.users.*"%>
+<%@ page import="com.google.appengine.api.datastore.DatastoreNeedIndexException"%>
 
 <%
   UserService userService = UserServiceFactory.getUserService();
@@ -121,9 +121,15 @@ function toggleCommentPost(id, expanded) {
     <%
       Iterable<Photo> photoIter = photoManager.getActivePhotos();
       ArrayList<Photo> photos = new ArrayList<Photo>();
-      for (Photo photo : photoIter) {
-        photos.add(photo);
-      }      
+      try {
+        for (Photo photo : photoIter) {
+          photos.add(photo);
+        }
+      } catch (DatastoreNeedIndexException e) {
+        pageContext.forward(configManager.getErrorPageUrl(
+          ConfigManager.ERROR_CODE_DATASTORE_INDEX_NOT_READY));
+      }
+
       int count = 0;
       for (Photo photo : photos) {
         String firstClass = "";
@@ -132,7 +138,7 @@ function toggleCommentPost(id, expanded) {
           firstClass = "first";
         }
         if (count == photos.size() - 1) {
-          lastClass = "last";        
+          lastClass = "last";
         }
     %>
     <div class="feed <%= firstClass %> <%= lastClass %>">
