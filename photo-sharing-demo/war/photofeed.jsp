@@ -6,7 +6,7 @@
 <%@ page import="com.google.cloud.demo.model.*"%>
 <%@ page import="com.google.appengine.api.users.*"%>
 <%@ page import="com.google.appengine.api.datastore.DatastoreNeedIndexException"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   UserService userService = UserServiceFactory.getUserService();
   AppContext appContext = AppContext.getAppContext();
@@ -153,7 +153,7 @@ function toggleCommentPost(id, expanded) {
             alt="" />
           <div class="desc">
             <h3><%= ServletUtils.getProtectedUserNickname(photo.getOwnerNickname()) %></h3>
-            <p><%= photo.getTitle() %>
+            <p><c:out value="<%= photo.getTitle() %>" escapeXml="true"/>
             <p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(photo.getUploadTime()) %></p>
           </div>
@@ -173,7 +173,7 @@ function toggleCommentPost(id, expanded) {
             alt="" />
           <div class="comment">
             <h3><%= ServletUtils.getProtectedUserNickname(comment.getCommentOwnerName()) %></h3>
-            <p><%= comment.getContent() %>
+            <p><c:out value="<%= comment.getContent() %>" escapeXml="true"/>
             <p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(comment.getTimestamp()) %></p>
           </div>
